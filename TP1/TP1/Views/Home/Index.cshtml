@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <form asp-action="Resultados" asp-controller="Home" method="post">
+        <div>
+            <label> Cuadrado del numero</label>
+            <input type="number" name="cuadrado" value="" />
+        </div>
+        <div>
+            <label>dividendo: </label>
+            <input type="number" name="dividendo" value="" />
+        </div>
+        <div>
+            <label>divisor: </label>
+            <input type="number" name="divisor" value="" />
+
+        </div>
+
+
+
+        <input type="submit" name="name" value="Calcular" class="btn btn-primary"/>
+
+    </form>
+</div>
