@@ -13,6 +13,7 @@ namespace TP1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -24,10 +25,27 @@ namespace TP1.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Resultados(int cuadrado, float dividendo, float divisor)
+        public IActionResult Resultados(string cuadrado, string dividendo, string divisor)
         {
-            ViewBag.div = dividendo / divisor;
-            ViewBag.cuadrado = cuadrado * cuadrado;
+            try
+            {
+                ViewBag.div = Convert.ToDouble(dividendo) / Convert.ToDouble(divisor);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.cuadrado = "no";
+                Logger.Error("Error" + ex.Message);
+            }
+            try
+            {
+                ViewBag.cuadrado = Convert.ToDouble(cuadrado) * Convert.ToDouble(cuadrado);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.div = "no";
+                Logger.Error("Error" + ex.Message);
+            }
+
             return View();
         }
         public IActionResult Privacy()
@@ -41,10 +59,25 @@ namespace TP1.Controllers
             return View(model.data);
         }
 
+        public IActionResult CalcularLitro(string kilometros)
+        {
+            try
+            {
+                ViewBag.litros = Convert.ToDouble(kilometros) / 4;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.cuadrado = "no";
+                Logger.Error("Error" + ex.Message);
+            }
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }
